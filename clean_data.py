@@ -13,7 +13,7 @@ df = pd.read_parquet("mm.pq")
 
 print(df.shape)
 
-print("create and delete varibles")
+print("create and del vars")
 
 df.date_created = df.date_created.apply(parse)
 df.date_created = df.date_created.map(lambda x: x.replace(tzinfo=None))
@@ -27,7 +27,6 @@ df["time_since"] = pd.to_numeric((datetime.datetime.now() - df.date_created).dt.
 df["time_since"] = df["time_since"]/3600
 
 df = df.drop(["tweet_id", "favorites", "retweets"], axis=1)
-df = df.set_index("date_created")
 
 pat1 = r'@[A-Za-z0-9_]+'
 pat2 = r'https?://[^ ]+'
@@ -48,7 +47,7 @@ def pre_processing(row):
     result = re.sub(r'[^A-Za-z ]','',fourth_process)
     return result.strip()
 
-print("precess tweets")
+print("preprocess tweets")
 
 df.body = df.body.apply(pre_processing)
 
@@ -64,6 +63,8 @@ for i, col in enumerate(word_grams.get_feature_names()):
 df = pd.merge(df, word_df, left_index=True, right_index=True)
 
 del word_df
+
+df = df.set_index("date_created")
 
 df = df.drop(["body"], axis=1)
 
