@@ -64,7 +64,9 @@ df = pd.merge(df, word_df, left_index=True, right_index=True)
 
 del word_df
 
-df = df.drop(["body"], axis=1)
+print(df.head())
+
+# df = df.drop(["body"], axis=1)
 
 df = df.set_index("date_created")
 
