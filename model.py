@@ -11,7 +11,7 @@ logging.basicConfig(filename='model.txt', filemode='w', format='%(asctime)s - %(
 
 df = pd.read_parquet("processed_tweets.parquet")
 
-df = df.drop(['time_since'], axis=1)
+df = df.drop(['time_since', 'day'], axis=1)
 
 x_data = df.drop(["interaction"], axis=1)
 y_data = df.interaction.values
