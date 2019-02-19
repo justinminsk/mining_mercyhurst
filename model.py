@@ -26,7 +26,8 @@ dtr = DecisionTreeRegressor(criterion='mse', max_depth=24, max_features=None,
            min_impurity_split=None, min_samples_leaf=1,
            min_samples_split=2, min_weight_fraction_leaf=0.0,
            presort=False, random_state=1, splitter='best')
-
+           
+dtr.fit(x_train, y_train)
 fi_dict = dict(zip(x_train.columns, dtr.feature_importances_))
 logging.info({ k:v for k, v in fi_dict.items() if v })
 print(dtr.score(x_test, y_test))
