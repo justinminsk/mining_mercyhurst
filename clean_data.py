@@ -61,6 +61,8 @@ word_df = pd.DataFrame()
 for i, col in enumerate(word_grams.get_feature_names()):
     word_df[col] = pd.Series(word_vector[:, i].toarray().ravel())
 
+df = pd.merge(df, word_df, left_index=True, right_index=True)
+
 del word_df
 
 df = df.drop(["body"], axis=1)
