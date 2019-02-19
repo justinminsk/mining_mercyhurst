@@ -70,12 +70,3 @@ print("write parquet")
 fastparquet.write("processed_tweets.parquet", df)
 
 print(df.shape)
-
-x_data = df.drop(["interaction"], axis=1)
-y_data = df.interaction.values
-
-print(x_data.shape)
-print(y_data.shape)
-
-x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=0.10)
-
