@@ -5,11 +5,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.externals import joblib
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.tree import export_graphviz
 
 
 logging.basicConfig(filename='model.txt', filemode='w', format='%(asctime)s - %(message)s', level=logging.INFO)
 
 df = pd.read_parquet("processed_tweets.parquet")
+
+print(df.shape)
 
 df = df.drop(['time_since', 'day'], axis=1)
 
