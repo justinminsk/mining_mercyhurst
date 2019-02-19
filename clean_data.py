@@ -7,10 +7,13 @@ from dateutil.parser import parse
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
+print("read in file")
 
 df = pd.read_parquet("mm.pq")
 
 print(df.shape)
+
+print("create and delete varibles")
 
 df.date_created = df.date_created.apply(parse)
 df.date_created = df.date_created.map(lambda x: x.replace(tzinfo=None))
@@ -45,6 +48,8 @@ def pre_processing(row):
     result = re.sub(r'[^A-Za-z ]','',fourth_process)
     return result.strip()
 
+print("precess tweets")
+
 df.body = df.body.apply(pre_processing)
 
 word_grams = TfidfVectorizer(analyzer = "word", ngram_range = (1, 5), stop_words="english")
@@ -59,6 +64,8 @@ for i, col in enumerate(word_grams.get_feature_names()):
 del word_df
 
 df = df.drop(["body"], axis=1)
+
+print("write parquet")
 
 fastparquet.write("processed_tweets.parquet", df)
 
