@@ -52,7 +52,7 @@ print("precess tweets")
 
 df.body = df.body.apply(pre_processing)
 
-word_grams = TfidfVectorizer(analyzer = "word", ngram_range = (1, 5), stop_words="english")
+word_grams = TfidfVectorizer(analyzer = "word", ngram_range = (2, 4), stop_words="english")
 
 word_vector = word_grams.fit_transform(df.body)
 
