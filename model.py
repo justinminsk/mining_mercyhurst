@@ -24,7 +24,7 @@ x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=0.
 print("x Train:", x_train.shape)
 print("y Trian", y_train.shape)
 
-rfr = RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=10,
+rfr = RandomForestRegressor(bootstrap=True, criterion='r2', max_depth=10,
            max_features='auto', max_leaf_nodes=None,
            min_impurity_decrease=0.0, min_impurity_split=None,
            min_samples_leaf=1, min_samples_split=2,
@@ -36,4 +36,4 @@ fi_dict = dict(zip(x_train.columns, rfr.feature_importances_))
 logging.info({ k:v for k, v in fi_dict.items() if v })
 logging.info(" ")
 logging.info(rfr.decision_path(x_train))
-print(rfr.score(x_test, y_test))
+print(rfr.score(x_test, y_test, ))
