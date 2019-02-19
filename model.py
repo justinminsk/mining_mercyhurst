@@ -27,16 +27,15 @@ x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=0.
 print("x Train:", x_train.shape)
 print("y Trian", y_train.shape)
 
-rfr = RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=10,
-           max_features='auto', max_leaf_nodes=None,
-           min_impurity_decrease=0.0, min_impurity_split=None,
-           min_samples_leaf=1, min_samples_split=2,
-           min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
-           oob_score=False, verbose=0, warm_start=False)
+dtr = DecisionTreeRegressor(criterion='mse', max_depth=24, max_features=None,
+           max_leaf_nodes=None, min_impurity_decrease=0.0,
+           min_impurity_split=None, min_samples_leaf=1,
+           min_samples_split=2, min_weight_fraction_leaf=0.0,
+           presort=False, random_state=1, splitter='best')
            
-rfr.fit(x_train, y_train)
-fi_dict = dict(zip(x_train.columns, rfr.feature_importances_))
+dtr.fit(x_train, y_train)
+fi_dict = dict(zip(x_train.columns, dtr.feature_importances_))
 logging.info({ k:v for k, v in fi_dict.items() if v })
 logging.info(" ")
-logging.info(rfr.decision_path(x_train))
-print(rfr.score(x_test, y_test, ))
+logging.info(dtr.decision_path(x_train))
+print(dtr.score(x_test, y_test, ))
