@@ -1,4 +1,5 @@
 import logging
+import operator
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -14,7 +15,7 @@ df = pd.read_parquet("processed_tweets.parquet")
 
 print(df.head())
 
-df = df.drop(['time_since', 'day'], axis=1)
+df = df.drop(['time_since_col', 'day_col'], axis=1)
 
 x_data = df.drop(["interaction_target"], axis=1)
 y_data = df.interaction_target.values
@@ -35,7 +36,7 @@ dtr = DecisionTreeRegressor(criterion='mse', max_depth=24, max_features=None,
            
 dtr.fit(x_train, y_train)
 fi_dict = dict(zip(x_train.columns, dtr.feature_importances_))
-logging.info({ k:v for k, v in fi_dict.items() if v })
-logging.info(" ")
-logging.info(dtr.decision_path(x_train))
+fi_dict_1 = { k:v for k, v in fi_dict.items() if v }
+fi_dict_sorted = sorted(fi_dict_1.items(), key=lambda kv: kv[1], reverse=True)
+logging.info(fi_dict_sorted)
 print(dtr.score(x_test, y_test, ))
