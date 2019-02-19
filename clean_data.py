@@ -18,13 +18,13 @@ print("create and del vars")
 df.date_created = df.date_created.apply(parse)
 df.date_created = df.date_created.map(lambda x: x.replace(tzinfo=None))
 
-df["interaction"] = df.favorites + df.retweets
-df["hour"] = pd.to_numeric(df.date_created.dt.hour)
-df["day"] = pd.to_numeric(df.date_created.dt.dayofyear)
-df["day_of_week"] = pd.to_numeric(df.date_created.dt.dayofweek)
-df["time_since"] = pd.to_numeric((datetime.datetime.now() - df.date_created).dt.total_seconds())
+df["interaction_target"] = df.favorites + df.retweets
+df["hour_col"] = pd.to_numeric(df.date_created.dt.hour)
+df["day_col"] = pd.to_numeric(df.date_created.dt.dayofyear)
+df["day_of_week_col"] = pd.to_numeric(df.date_created.dt.dayofweek)
+df["time_since_col"] = pd.to_numeric((datetime.datetime.now() - df.date_created).dt.total_seconds())
 # get hours since seconds is too large
-df["time_since"] = df["time_since"]/3600
+df["time_since_col"] = df["time_since"]/3600
 
 df = df.drop(["tweet_id", "favorites", "retweets"], axis=1)
 
@@ -64,9 +64,10 @@ df = pd.merge(df, word_df, left_index=True, right_index=True)
 
 del word_df
 
+# Note columns changed to _x for time
 print(df.head())
 
-# df = df.drop(["body"], axis=1)
+df = df.drop(["body_x"], axis=1)
 
 df = df.set_index("date_created")
 
