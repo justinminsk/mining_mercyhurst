@@ -16,8 +16,8 @@ print(df.head())
 
 df = df.drop(['time_since', 'day'], axis=1)
 
-x_data = df.drop(["interaction"], axis=1)
-y_data = df.interaction.values
+x_data = df.drop(["interaction_target"], axis=1)
+y_data = df.interaction_target.values
 
 print(x_data.shape)
 print(y_data.shape)
